@@ -16,7 +16,7 @@ repositories {
 
 dependencies {
     minecraft "com.mojang:minecraft:26.2"
-    // No mappings line - using Intermediary only to mirror Meteor Client 26.2-SNAPSHOT strategy
+    mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:0.19.3"
     modImplementation "net.fabricmc:fabric-api:0.161.0+26.2"
 
