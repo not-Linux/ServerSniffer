@@ -85,8 +85,11 @@ public abstract class ClientPlayNetworkHandlerMixin {
     @Inject(method = "onChunkLoadDistance", at = @At("HEAD"))
     private void onChunkDistance(ChunkLoadDistanceS2CPacket packet, CallbackInfo ci) {
         ServerIntel i = IntelStore.get();
-        try { i.viewDistance = packet.distance(); } catch (Throwable t2) {
-            try { var f = packet.getClass().getDeclaredField("distance"); f.setAccessible(true); i.viewDistance = f.getInt(packet); } catch (Exception ignored) {}
+        // Use reflection to stay compatible across Yarn mapping variations (distance / chunkLoadDistance / field_...)
+        for (var f : packet.getClass().getDeclaredFields()) {
+            if (f.getType() == int.class) {
+                try { f.setAccessible(true); i.viewDistance = f.getInt(packet); break; } catch (Exception ignored) {}
+            }
         }
         i.log("ChunkLoadDistance view=" + i.viewDistance);
     }
@@ -94,8 +97,10 @@ public abstract class ClientPlayNetworkHandlerMixin {
     @Inject(method = "onSimulationDistance", at = @At("HEAD"))
     private void onSimDistance(SimulationDistanceS2CPacket packet, CallbackInfo ci) {
         ServerIntel i = IntelStore.get();
-        try { i.simulationDistance = packet.distance(); } catch (Throwable t2) {
-            try { var f = packet.getClass().getDeclaredField("distance"); f.setAccessible(true); i.simulationDistance = f.getInt(packet); } catch (Exception ignored) {}
+        for (var f : packet.getClass().getDeclaredFields()) {
+            if (f.getType() == int.class) {
+                try { f.setAccessible(true); i.simulationDistance = f.getInt(packet); break; } catch (Exception ignored) {}
+            }
         }
         i.log("SimulationDistance sim=" + i.simulationDistance);
     }
@@ -119,9 +124,5 @@ public abstract class ClientPlayNetworkHandlerMixin {
         }
     }
 
-    @Inject(method = "onDisconnected", at = @At("HEAD"))
-    private void onDisconnect(net.minecraft.text.Text reason, CallbackInfo ci) {
-        // Keep intel around briefly so .serverinfo still works after kick, but mark timing
-        IntelStore.get().log("Disconnected: " + reason.getString());
-    }
+    // disconnect logging handled via GameLeftEvent in the module; no mixin needed here
 }
