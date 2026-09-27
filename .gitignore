@@ -1,0 +1,9 @@
+.gradle/
+build/
+remappedSrc/
+out/
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+/serversniffer/
+run/
+logs/

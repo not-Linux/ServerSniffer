@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "serversniffer",
+  "version": "${version}",
+  "name": "ServerSniffer",
+  "description": "Meteor addon that reads server packets to reveal plugins, software, anticheat & everything about the server.",
+  "authors": ["ServerSniffer"],
+  "license": "MIT",
+  "icon": "assets/serversniffer/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "meteor": [
+      "com.serversniffer.ServerSnifferAddon"
+    ]
+  },
+  "mixins": [
+    "serversniffer.mixins.json"
+  ],
+  "accessWidener": "serversniffer.accesswidener",
+  "depends": {
+    "fabricloader": ">=0.14.22",
+    "fabric": "*",
+    "java": ">=21",
+    "minecraft": "1.21.4",
+    "meteor-client": "*"
+  }
+}

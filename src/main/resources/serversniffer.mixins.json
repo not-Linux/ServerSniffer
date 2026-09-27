@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.serversniffer.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "serversniffer.refmap.json",
+  "mixins": [],
+  "client": [
+    "ClientConnectionMixin",
+    "ClientPlayNetworkHandlerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
