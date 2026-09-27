@@ -1,28 +1,30 @@
 plugins {
-    id 'fabric-loom' version '1.9.2'
+    id 'fabric-loom' version '1.17-SNAPSHOT'
     id 'maven-publish'
 }
 
-version = "1.2.0"
+version = "1.3.0-26.2"
 group = "com.serversniffer"
 
 repositories {
     maven { url = "https://maven.fabricmc.net/" }
     maven { url = "https://maven.meteordev.org/releases" }
+    maven { url = "https://maven.meteordev.org/snapshots" }
     maven { url = "https://maven.terraformersmc.com/releases/" }
     mavenCentral()
 }
 
 loom {
+    // 26.x calendar versions have no Yarn — use official Mojang mappings
+    mappings loom.officialMojangMappings()
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:1.21.4"
-    mappings "net.fabricmc:yarn:1.21.4+build.8:v2"
-    modImplementation "net.fabricmc:fabric-loader:0.16.9"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.119.2+1.21.4"
+    minecraft "com.mojang:minecraft:26.2"
+    modImplementation "net.fabricmc:fabric-loader:0.19.3"
+    modImplementation "net.fabricmc:fabric-api:0.161.0+26.2"
 
-    modImplementation("meteordevelopment:meteor-client:0.5.8") {
+    modImplementation("meteordevelopment:meteor-client:26.2-SNAPSHOT") {
         exclude group: "net.fabricmc.fabric-api"
     }
 }
@@ -34,12 +36,13 @@ processResources {
     }
 }
 
-def targetJavaVersion = 21
+def targetJavaVersion = 25
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = "UTF-8"
     it.options.release = targetJavaVersion
 }
 
 java {
+    toolchain { languageVersion = JavaLanguageVersion.of(targetJavaVersion) }
     withSourcesJar()
 }
