@@ -25,9 +25,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ClientConnection.class)
 public abstract class ClientConnectionMixin {
 
-    @Inject(method = "channelRead0(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/network/packet/Packet;)V",
+    @Inject(method = "channelRead0(Lio/netty/channel/ChannelHandlerContext;Ljava/lang/Object;)V",
             at = @At("HEAD"))
-    private void onPacket(ChannelHandlerContext ctx, Packet<?> packet, CallbackInfo ci) {
+    private void onPacket(ChannelHandlerContext ctx, Object packetObj, CallbackInfo ci) {
+        if (!(packetObj instanceof Packet<?> packet)) return;
         // Only care about server -> client packets while playing
         // We do not filter by listener type — cheap instanceof is enough
         ServerIntel intel = IntelStore.get();
