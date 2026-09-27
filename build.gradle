@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
-version = "1.3.0-26.3"
+version = "1.3.0-26.2"
 group = "com.serversniffer"
 
 repositories {
@@ -15,12 +15,12 @@ repositories {
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:26.3"
-    mappings "net.fabricmc:intermediary:26.3:v2"
+    minecraft "com.mojang:minecraft:26.2"
+    mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:0.19.3"
-    modImplementation "net.fabricmc:fabric-api:0.161.0+26.3"
+    modImplementation "net.fabricmc:fabric-api:0.161.0+26.2"
 
-    modImplementation("meteordevelopment:meteor-client:26.3-SNAPSHOT") {
+    modImplementation("meteordevelopment:meteor-client:26.2-SNAPSHOT") {
         exclude group: "net.fabricmc.fabric-api"
     }
 }
