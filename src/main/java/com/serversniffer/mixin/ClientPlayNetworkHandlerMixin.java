@@ -85,8 +85,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
     @Inject(method = "onChunkLoadDistance", at = @At("HEAD"))
     private void onChunkDistance(ChunkLoadDistanceS2CPacket packet, CallbackInfo ci) {
         ServerIntel i = IntelStore.get();
-        try { i.viewDistance = packet.getDistance(); } catch (Throwable t2) {
-            // fallback via field access
+        try { i.viewDistance = packet.distance(); } catch (Throwable t2) {
             try { var f = packet.getClass().getDeclaredField("distance"); f.setAccessible(true); i.viewDistance = f.getInt(packet); } catch (Exception ignored) {}
         }
         i.log("ChunkLoadDistance view=" + i.viewDistance);
@@ -95,7 +94,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
     @Inject(method = "onSimulationDistance", at = @At("HEAD"))
     private void onSimDistance(SimulationDistanceS2CPacket packet, CallbackInfo ci) {
         ServerIntel i = IntelStore.get();
-        try { i.simulationDistance = packet.getDistance(); } catch (Throwable t2) {
+        try { i.simulationDistance = packet.distance(); } catch (Throwable t2) {
             try { var f = packet.getClass().getDeclaredField("distance"); f.setAccessible(true); i.simulationDistance = f.getInt(packet); } catch (Exception ignored) {}
         }
         i.log("SimulationDistance sim=" + i.simulationDistance);

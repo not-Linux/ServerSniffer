@@ -48,8 +48,8 @@ public class ServerHud extends HudElement {
             String msg = "No server data — join a server";
             w = Math.max(w, renderer.textWidth(msg, true));
             setSize(w, 22);
-            renderer.text(title, x, y, Color.fromRGB(85, 255, 255), true);
-            renderer.text(msg, x, y + 11, Color.fromRGB(170, 170, 170), true);
+            renderer.text(title, x, y, new Color(85, 255, 255), true);
+            renderer.text(msg, x, y + 11, new Color(170, 170, 170), true);
             return;
         }
 
@@ -76,12 +76,13 @@ public class ServerHud extends HudElement {
         for (int idx = 0; idx < lines.size(); idx++) {
             String s = lines.get(idx);
             Color c;
-            if (idx == 0) c = Color.fromRGB(85, 255, 255);
-            else if (s.startsWith("AC:")) c = Color.fromRGB(255, 85, 85);
-            else if (idx == lines.size() - 1) c = Color.fromRGB(90, 90, 90);
-            else c = Color.fromRGB(170, 170, 170);
+            if (idx == 0) c = new Color(85, 255, 255);
+            else if (s.startsWith("AC:")) c = new Color(255, 85, 85);
+            else if (idx == lines.size() - 1) c = new Color(90, 90, 90);
+            else c = new Color(170, 170, 170);
             renderer.text(s, x, yy, c, true);
             yy += 11;
         }
     }
 }
+
